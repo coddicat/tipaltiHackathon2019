@@ -10,7 +10,6 @@ export default new Vuex.Store({
     strict: true,    
     state: {
         currentPage: null,        
-        orientation: null,
         loading: false,
         invoicesHistory: {},
         settingsFirstStep: {
@@ -24,14 +23,13 @@ export default new Vuex.Store({
     },
     mutations: {
         [storeConsts.MUTATE_CURRENT_PAGE]: (state, payload) => state.currentPage = payload,
-        [storeConsts.MUTATE_ORIENTATION]: (state, payload) => state.orientation = payload,
         [storeConsts.MUTATE_LOADING]: (state, payload) => state.loading = payload,
         [storeConsts.MUTATE_INVOICE_HISTORY]: (state, payload) => state.invoicesHistory = payload,
         [storeConsts.MUTATE_SETTINGS_FIRST_STEP]: (state, payload) => Vue.set(state, 'settingsFirstStep', payload)
     },
     actions: {
+        [storeConsts.SET_LOADING]: ({ commit }, payload) => commit(storeConsts.MUTATE_LOADING, payload),
         [storeConsts.SET_CURRENT_PAGE]: ({ commit }, payload) => commit(storeConsts.MUTATE_CURRENT_PAGE, payload),
-        [storeConsts.SET_ORIENTATION]: ({ commit }, payload) => commit(storeConsts.MUTATE_ORIENTATION, payload),
         [storeConsts.LOAD_INVOICE_HISTORY]: async ({ commit, state }, pageCount) => {
             try {                    
                 commit(storeConsts.MUTATE_LOADING, true);
@@ -73,7 +71,6 @@ export default new Vuex.Store({
     },
     getters: {
         [storeConsts.GET_CURRENT_PAGE]: (state) => state.currentPage,
-        [storeConsts.GET_ORIENTATION]: (state) => state.orientation,
         [storeConsts.GET_LOADING]: (state) => state.loading,
         [storeConsts.GET_INVOICE_HISTORY]: (state) => state.invoicesHistory,
         [storeConsts.GET_SETTINGS_FIRST_STEP_DATA]: (state) => state.settingsFirstStep.FirstStep.Data,

@@ -19,52 +19,7 @@
                     <Label col="0" text.decode="&#xf013;" class="nt-icon fas"></Label>
                     <Label col="1" text="Settings" class="p-r-10"></Label>
                 </GridLayout>
-                <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (currentPage === 'Settings' ? ' -selected': '')" @tap="onNavigationItemTap(Settings)">
-                    <Label col="0" text.decode="&#xf013;" class="nt-icon fas"></Label>
-                    <Label col="1" text="Settings" class="p-r-10"></Label>
-                </GridLayout>
-                <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (currentPage === 'Settings' ? ' -selected': '')" @tap="onNavigationItemTap(Settings)">
-                    <Label col="0" text.decode="&#xf013;" class="nt-icon fas"></Label>
-                    <Label col="1" text="Settings" class="p-r-10"></Label>
-                </GridLayout>
-                <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (currentPage === 'Settings' ? ' -selected': '')" @tap="onNavigationItemTap(Settings)">
-                    <Label col="0" text.decode="&#xf013;" class="nt-icon fas"></Label>
-                    <Label col="1" text="Settings" class="p-r-10"></Label>
-                </GridLayout>
-
-                <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (currentPage === 'Settings' ? ' -selected': '')" @tap="onNavigationItemTap(Settings)">
-                    <Label col="0" text.decode="&#xf013;" class="nt-icon fas"></Label>
-                    <Label col="1" text="Settings" class="p-r-10"></Label>
-                </GridLayout>
-                <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (currentPage === 'Settings' ? ' -selected': '')" @tap="onNavigationItemTap(Settings)">
-                    <Label col="0" text.decode="&#xf013;" class="nt-icon fas"></Label>
-                    <Label col="1" text="Settings" class="p-r-10"></Label>
-                </GridLayout>
-                <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (currentPage === 'Settings' ? ' -selected': '')" @tap="onNavigationItemTap(Settings)">
-                    <Label col="0" text.decode="&#xf013;" class="nt-icon fas"></Label>
-                    <Label col="1" text="Settings" class="p-r-10"></Label>
-                </GridLayout>
-                <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (currentPage === 'Settings' ? ' -selected': '')" @tap="onNavigationItemTap(Settings)">
-                    <Label col="0" text.decode="&#xf013;" class="nt-icon fas"></Label>
-                    <Label col="1" text="Settings" class="p-r-10"></Label>
-                </GridLayout>
-                <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (currentPage === 'Settings' ? ' -selected': '')" @tap="onNavigationItemTap(Settings)">
-                    <Label col="0" text.decode="&#xf013;" class="nt-icon fas"></Label>
-                    <Label col="1" text="Settings" class="p-r-10"></Label>
-                </GridLayout>
-                <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (currentPage === 'Settings' ? ' -selected': '')" @tap="onNavigationItemTap(Settings)">
-                    <Label col="0" text.decode="&#xf013;" class="nt-icon fas"></Label>
-                    <Label col="1" text="Settings" class="p-r-10"></Label>
-                </GridLayout>
-                <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (currentPage === 'Settings' ? ' -selected': '')" @tap="onNavigationItemTap(Settings)">
-                    <Label col="0" text.decode="&#xf013;" class="nt-icon fas"></Label>
-                    <Label col="1" text="Settings" class="p-r-10"></Label>
-                </GridLayout>
-                <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (currentPage === 'Settings' ? ' -selected': '')" @tap="onNavigationItemTap(Settings)">
-                    <Label col="0" text.decode="&#xf013;" class="nt-icon fas"></Label>
-                    <Label col="1" text="Settings" class="p-r-10"></Label>
-                </GridLayout>
-
+                
             </StackLayout>
         </ScrollView>
     </GridLayout>
@@ -75,7 +30,7 @@ import InvoicesHistory from "~/pages/InvoicesHistory";
 import Settings from "~/pages/Settings";
 import { GET_CURRENT_PAGE } from '~/consts/storeConst';
 import { mapGetters } from 'vuex';
-import { Frame } from "tns-core-modules/ui/frame";
+//import { Frame } from "tns-core-modules/ui/frame";
 
 export default {
     data () {
@@ -96,10 +51,11 @@ export default {
     methods: {
         onNavigationItemTap(component) {
             this.$navigateTo(component, {
-                clearHistory: true,                    
+                clearHistory: true, 
+                frame: 'drawerMainContent',
             });
             this.$closeDrawer();
         }
-    }
+    },
 };
 </script>

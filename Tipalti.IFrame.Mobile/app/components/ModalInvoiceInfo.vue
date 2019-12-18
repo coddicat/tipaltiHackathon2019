@@ -1,5 +1,4 @@
 <template>
-    <Frame>
     <Page class="page">
         <ActionBar class="action-bar" title="Invoice info">
             <NavigationButton 
@@ -50,28 +49,16 @@
             </StackLayout>
         </ScrollView>        
     </Page>
-    </Frame>
 </template>
 <script>
-import * as Application from "application";
 export default {
     props: {
         invoice: Object
     },
     methods: {
         onClose() {
-            this.$modal.close();
+            this.$navigateBack();
         },
-    },
-    created() {
-        if (Application.android) {
-            Application.android.on(Application.AndroidApplication.activityBackPressedEvent, this.onClose);
-        }
-    },
-    destroyed() {
-        if (Application.android) {
-            Application.android.off(Application.AndroidApplication.activityBackPressedEvent, this.onClose);
-        }        
     },
 }
 </script>

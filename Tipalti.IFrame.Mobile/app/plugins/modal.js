@@ -11,13 +11,10 @@ export default {
                 }
             });
         };
-        Vue.prototype.$listPicker = async function ({ title, list, selected }) {
+        Vue.prototype.$listPicker = async function (props) {
             var res = await this.$showModal(ModalListPicker, { 
                 fullscreen: false, 
-                props: { 
-                    list: list, 
-                    selected: selected 
-                }
+                props: props
             });
             return res;            
         };

@@ -4,15 +4,16 @@ import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
 import store from '~/store';
 import DrawerPlugin from '~/plugins/drawer';
 import CurrentPagePlugin from '~/plugins/currentPage';
-import OrientationPlugin from '~/plugins/orientation';
 import ModalPlugin from '~/plugins/modal';
 import api from '~/api';
-//import BoardHubPlugin from '~/plugins/boardHub';
-//import ImageStorePlugin from '~/plugins/imageStore';
 import moment from 'moment';
 import RipplePlugin from 'nativescript-material-ripple/vue';
 import RadListView from 'nativescript-ui-listview/vue';
 import tokenService from '@/tokenService';
+
+import Settings from "./pages/Settings";
+import DrawerContent from "./components/DrawerContent";
+
 
 Vue.use(ModalPlugin);
 Vue.use(RadListView);
@@ -20,7 +21,6 @@ Vue.use(RipplePlugin);
 Vue.use(DrawerPlugin);
 Vue.use(CurrentPagePlugin);
 Vue.use(RadSideDrawer);
-Vue.use(OrientationPlugin);
 Vue.config.silent = (TNS_ENV === 'production');
 
 // api.settings.baseURL = "http://10.16.0.177:45455";
@@ -46,21 +46,19 @@ Vue.filter('amount', function(value) {
   return currency + ' ' + (Math.round(amount * 100) / 100).toFixed(2);
 });
 
-
-//get token from 
-
-
-
-
 //Vue.config.silent = true;
 //Vue.productionTip = true;
-
 
 new Vue({
   store,
   render (h) {
       return h(
-        App
+        App,
+        [
+          h(DrawerContent, { slot: 'drawerContent' }),
+          h(Settings, { slot: 'mainContent' })
+        ]
       )
     }
   }).$start();
+

@@ -1,2 +1,1 @@
-export default {
-}
+export const CONFIRM_DETAILS_CHANGED = 'Changing these details will erase your banking information and invalidate your tax form. Following this change, please continue to update your payment method and tax form.';

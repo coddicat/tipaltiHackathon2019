@@ -8,114 +8,56 @@
                 ios.position="left">
             </ActionItem>
             <Label class="action-bar-title" text="Settings"></Label>
-            <ActionItem @tap="onEditForm" android.systemIcon="ic_menu_edit">
+            <ActionItem @tap="onEditForm" android.systemIcon="ic_menu_edit" :visibility="loading ? 'collapsed' : 'visible'">
             </ActionItem>
         </ActionBar>
+        <GridLayout rows="*">
+            <Tabs selectedIndex="0" :visibility="loading ? 'collapsed' : 'visible'">
+                <TabStrip>
+                    <TabStripItem>
+                        <Label text="ADDRESS"></Label>
+                    </TabStripItem>
+                    <TabStripItem>
+                        <Label text="PAYMENT METHOD"></Label>                    
+                    </TabStripItem>
+                    <TabStripItem>
+                        <Label text="TAX FORMS"></Label>                    
+                    </TabStripItem>
+                </TabStrip>
 
-        <Tabs selectedIndex="0">
-            <TabStrip>
-                <TabStripItem>
-                    <Label text="ADDRESS"></Label>
-                </TabStripItem>
-                <TabStripItem>
-                    <Label text="PAYMENT METHOD"></Label>                    
-                </TabStripItem>
-                <TabStripItem>
-                    <Label text="TAX FORMS"></Label>                    
-                </TabStripItem>
-            </TabStrip>
-
-            <TabContentItem>
-                <GridLayout rows="auto">                    
+                <TabContentItem>                    
                     <ScrollView>
                         <StackLayout class="settings__form">
-                            <GridLayout columns="auto, *">
-                                <Label col="0" class="settings_form_title"
-                                    text="Type"></Label>
-                                <Label col="1" class="settings_form_value"
-                                    :text="form.PayeeEntityType"></Label>
-                            </GridLayout>
-                            <GridLayout columns="auto, *">
-                                <Label col="0" class="settings_form_title"
-                                    text="Contact Email"></Label>
-                                <Label col="1" class="settings_form_value" 
-                                    :text="form.EmailAddress"></Label>
-                            </GridLayout>
-                            <GridLayout columns="auto, *">                                
-                                <Label col="0" class="settings_form_title"
-                                    text="First Name"></Label>
-                                <Label col="1" class="settings_form_value" 
-                                    :text="form.FirstName"></Label>                                                    
-                            </GridLayout>
-                            <GridLayout columns="auto, *">                                
-                                <Label col="0" class="settings_form_title"
-                                    text="Middle Name"></Label>
-                                <Label col="1" class="settings_form_value" 
-                                    :text="form.MiddleName"></Label>                                                    
-                            </GridLayout>
-                            <GridLayout columns="auto, *">                                
-                                <Label col="0" class="settings_form_title"
-                                    text="Last Name"></Label>
-                                <Label col="1" class="settings_form_value" 
-                                    :text="form.LastName"></Label>                                                    
-                            </GridLayout>
-                            <GridLayout v-if="form.PayeeEntityType === 'Company'" columns="auto, *">                                
-                                <Label col="0" class="settings_form_title"
-                                    text="Company"></Label>
-                                <Label col="1" class="settings_form_value" 
-                                    :text="form.Company"></Label>                                                    
-                            </GridLayout>
-                            <GridLayout rows="auto, auto">                                
-                                <Label row="0" class="settings_form_title"
-                                    text="Address"></Label>
-                                <Label row="1" textWrap="true" class="settings_form_value--ownline" 
-                                    :text="form.Address"></Label>                                                    
-                            </GridLayout>
-                            <GridLayout rows="auto, auto">                                
-                                <Label row="0" class="settings_form_title"
-                                    text="Address2"></Label>
-                                <Label row="1" textWrap="true" class="settings_form_value--ownline" 
-                                    :text="form.Address2"></Label>                                                    
-                            </GridLayout>
-                            <GridLayout columns="auto, *">                                
-                                <Label col="0" class="settings_form_title"
-                                    text="City"></Label>
-                                <Label col="1" class="settings_form_value" 
-                                    :text="form.City"></Label>                                                    
-                            </GridLayout>
-                            <GridLayout columns="auto, *">                                
-                                <Label col="0" class="settings_form_title"
-                                    text="Zip"></Label>
-                                <Label col="1" class="settings_form_value" 
-                                    :text="form.Zip"></Label>                                                    
-                            </GridLayout>
-                            <GridLayout columns="auto, *">                                
-                                <Label col="0" class="settings_form_title"
-                                    text="Country"></Label>
-                                <Label col="1" textAlignment="right" 
-                                    :text="country"></Label>                                                    
-                            </GridLayout>
+                            <FormValue title="Type" :value="form.PayeeEntityType"></FormValue>
+                            <FormValue title="Contact Email" :value="form.EmailAddress"></FormValue>
+                            <FormValue title="First Name" :value="form.FirstName"></FormValue>
+                            <FormValue title="Middle Name" :value="form.MiddleName"></FormValue>
+                            <FormValue title="Last Name" :value="form.LastName"></FormValue>
+                            <FormValue title="Company" :value="form.Company" :visibility="form.PayeeEntityType === 'Company' ? 'visible' : 'collapsed'"></FormValue>
+                            <FormText title="Address" :value="form.Address" wrap></FormText>
+                            <FormText title="Address 2" :value="form.Address2" wrap></FormText>
+                            <FormValue title="City" :value="form.City"></FormValue>
+                            <FormValue title="Zip" :value="form.Zip"></FormValue>
+                            <FormValue title="Country" :value="country"></FormValue>
                         </StackLayout>
-                    </ScrollView>
-
-                    <ActivityIndicator row="0" rowSpan="2"
-                        :busy="loading"
-                        class="activity-indicator">
-                    </ActivityIndicator>                         
-                </GridLayout>
-            </TabContentItem>
-            <TabContentItem>
-                <GridLayout>
-                    <Label text="PAYMENT METHOD" class="h2 text-center"></Label>
-                </GridLayout>
-            </TabContentItem>
-            <TabContentItem>
-                <GridLayout>
-                    <Label text="TAX FORMS" class="h2 text-center"></Label>
-                </GridLayout>
-            </TabContentItem>
-
-        </Tabs>
+                    </ScrollView>                    
+                </TabContentItem>
+                <TabContentItem>
+                    <GridLayout>
+                        <Label text="PAYMENT METHOD" class="h2 text-center"></Label>
+                    </GridLayout>
+                </TabContentItem>
+                <TabContentItem>
+                    <GridLayout>
+                        <Label text="TAX FORMS" class="h2 text-center"></Label>
+                    </GridLayout>
+                </TabContentItem>
+            </Tabs>
+            <ActivityIndicator
+                :busy="loading"
+                class="activity-indicator">
+            </ActivityIndicator>                         
+        </GridLayout>        
     </Page>
 </template>
 
@@ -124,6 +66,8 @@
 import { GET_LOADING, LOAD_SETTINGS_FIRST_STEP, GET_SETTINGS_FIRST_STEP_DATA, GET_SETTINGS_FIRST_STEP_STATIC_DATA } from '~/consts/storeConst'; 
 import { mapGetters, mapActions } from 'vuex';
 import ModalEditAddress from '~/components/ModalEditAddress';
+import FormValue from '~/components/FormControls/FormValue';
+import FormText from '~/components/FormControls/FormText';
 export default {
     page: 'Settings',
     computed: {
@@ -145,7 +89,13 @@ export default {
             loadFirstStep: LOAD_SETTINGS_FIRST_STEP
         }),
         onEditForm(){
-            this.$showModal(ModalEditAddress, { fullscreen: true, props: { form: JSON.parse(JSON.stringify(this.form)) }});
+            const copy = JSON.parse(JSON.stringify(this.form));
+            this.$navigateTo(ModalEditAddress, { 
+                frame: 'root-frame', 
+                props: { 
+                    form: copy
+                } 
+            });            
         },
         onDrawerButtonTap() {                
             this.$showDrawer();
@@ -160,5 +110,10 @@ export default {
             await this.onLoad();
         },
     },        
+    components: {
+        ModalEditAddress,
+        FormValue,
+        FormText
+    }
 };
 </script>

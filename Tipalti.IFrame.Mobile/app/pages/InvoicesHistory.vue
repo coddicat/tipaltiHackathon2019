@@ -1,6 +1,5 @@
 <template>
-    <Page class="page" @loaded="onPageLoaded" @unloaded="onUnloaded" @navigatedTo="navigatedTo" 
-        :actionBarHidden="orientation === 'landscape'" >
+    <Page class="page" @loaded="onPageLoaded">
         <ActionBar class="action-bar" title="Invoices History">
             <NavigationButton ios:visibility="collapsed" icon="res://menu" @tap="onDrawerButtonTap"></NavigationButton>
             <ActionItem icon="res://menu" 
@@ -24,12 +23,7 @@
                 @pullToRefreshInitiated="onPullToRefreshInitiated"
                 row="1" col="0" for="item in itemList">
                 <v-template>
-                    <GridLayout rows="*" columns="*,*,*,30" style="border-bottom-color: black; border-bottom-width: 0.5; height: 50;" >
-                        <Label row="0" col="0" textAlignment="left" :text="item.InvoiceNumber"></Label>
-                        <Label row="0" col="1" textAlignment="center" :text="item.Amount | amount"></Label>
-                        <Label row="0" col="2" textAlignment="center" :text="item.StatusDescription"></Label>
-                        <Label row="0" col="3" textAlignment="right" text.decode="&#xf141;" class="fas" @tap="onItem(item)"></Label>
-                    </GridLayout>
+                    <InvoicesHistoryRow :invoice="item"></InvoicesHistoryRow>
                 </v-template>
             </RadListView> 
 
@@ -42,14 +36,13 @@
 </template>
 
 <script>
-import { 
-    GET_ORIENTATION, 
+import {
     GET_LOADING, 
     LOAD_INVOICE_HISTORY,
     GET_INVOICE_HISTORY
 } from '~/consts/storeConst'; 
 import { mapGetters, mapActions } from 'vuex';
-import ModalInvoiceInfo from '@/components/ModalInvoiceInfo';    
+import InvoicesHistoryRow from '@/components/InvoicesHistoryRow';    
 
 export default {
     page: 'InvoicesHistory',
@@ -60,8 +53,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters({
-            orientation: GET_ORIENTATION,
+        ...mapGetters({            
             loading: GET_LOADING,  
             invoicesHistory: GET_INVOICE_HISTORY
         }),
@@ -79,7 +71,6 @@ export default {
         async onLoadMoreDataRequested(args) {                
             const listView = args.object;
             if(this.itemList.length > 0) {
-                console.log('onLoadMoreDataRequested:', this.itemList.length);
                 args.returnValue = true;
                 this.PageCount++;                  
                 await this.onLoad();
@@ -106,17 +97,10 @@ export default {
             this.$nextTick(() => {
                 this.loadOnDemandMode = "Manual";
             });
-        },
-        onUnloaded() {
-        },
-        navigatedTo() {
-            this.$setCurrentPage();                
-        },
-        onItem(item) {
-            this.$showModal(ModalInvoiceInfo, { fullscreen: true, props: { invoice: item } });
-        }
+        },        
     },
     components: {
+        InvoicesHistoryRow
     },
 };
 </script>

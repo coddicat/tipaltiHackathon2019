@@ -1,20 +1,20 @@
 <template lang="html">
-  <RadSideDrawer id="sideDrawer" drawerLocation="Left" gesturesEnabled="true" :drawerTransition="transition">
-    <StackLayout ~drawerContent backgroundColor="#ffffff">
-      <DrawerContent></DrawerContent>
-    </StackLayout>
-    <Frame ~mainContent ref="drawerMainContent">
-      <!-- <InvoicesHistory></InvoicesHistory> -->
-      <Settings></Settings>
-    </Frame>
-  </RadSideDrawer>
+  <Frame id="root-frame">
+    <Page actionBarHidden="true">
+      <RadSideDrawer ref="sideDrawer" drawerLocation="Left" gesturesEnabled="true" :drawerTransition="transition">
+        <StackLayout ~drawerContent backgroundColor="#ffffff">
+          <slot name="drawerContent"></slot>
+        </StackLayout>
+        <Frame ~mainContent id="drawerMainContent">
+          <slot name="mainContent"></slot>
+        </Frame>
+      </RadSideDrawer>
+    </Page>
+  </Frame>
 </template>
 
 <script>
 import { SlideInOnTopTransition } from 'nativescript-ui-sidedrawer';
-import * as statusBar from 'nativescript-status-bar';
-import { GET_ORIENTATION } from '~/consts/storeConst'; 
-import { mapGetters } from 'vuex';
 import Settings from "~/pages/Settings";
 import InvoicesHistory from "~/pages/InvoicesHistory";
 import DrawerContent from "~/components/DrawerContent";
@@ -25,26 +25,13 @@ export default {
       transition: new SlideInOnTopTransition()
     }
   },
-  computed: {
-    ...mapGetters({
-        orientation: GET_ORIENTATION
-    }),        
-  },   
   components: {
-    InvoicesHistory, DrawerContent,
+    InvoicesHistory, 
+    DrawerContent,
     Settings
-  },  
+  }, 
   mounted() {
-    this.$initOrientation();
-  },
-  watch: {
-    orientation(val) {
-      if(val === 'landscape') {
-        statusBar.hide();
-      } else {
-        statusBar.show();
-      }
-    }
+      this.$initDrawer(this.$refs.sideDrawer);
   },
 }
 </script>
