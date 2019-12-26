@@ -5,3 +5,5 @@
 *.sqlite
 *.suo
 *.json
+/Tipalti.IFrame.Mobile/platforms
+/Tipalti.IFrame.Mobile/node_modules
